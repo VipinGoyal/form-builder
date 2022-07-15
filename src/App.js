@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components";
+import "./App.css";
+import { Header } from "./stories/Header";
+
+import { FormData } from "./config/FormConfig";
+import { FormBuilder } from "./containers/FormBuilder";
+
+const AppWrapper = styled.div`
+  display: grid;
+`;
 
 function App() {
+  const headerData = {
+    user: {
+      name: "Setu Careers",
+    },
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header {...headerData} />
+      <AppWrapper>{<FormBuilder data={FormData} />}</AppWrapper>
     </div>
   );
 }
