@@ -1,3 +1,31 @@
+# Features
+
+1. Storybook-based component development
+2. Custom Classname Support for all components
+3. Minimalist, easy, and quick configuration for form fields
+4. Validation Rule Sets for all root and nested elements
+5. Nested Fields Support with instant / on-submission validation
+6. Easy configuration for form fields
+
+# Command
+
+To build and Start locally command :-
+
+```
+    yarn && yarn build && yarn start
+```
+
+To Run local storybook - in order to preview component locally command :-
+
+```
+    yarn && yarn build && yarn storybook
+```
+
+- To Generate New Form or Change in Existing Form, Path :- -
+- src/config/FormConfig.jsx
+  - In case nesting form elements, we need to add it under special key as _chain_ in the respective form field.
+  - While chaining elements, we need to make sure that respective value should be matched with parent's field value
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
