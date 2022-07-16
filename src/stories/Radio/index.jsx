@@ -69,6 +69,7 @@ export const Radio = ({
     handleChainChange,
     handleChainBlurChange,
     isValid,
+    isRequired,
     errorMessage,
     ...props
 }) => {
@@ -83,7 +84,7 @@ export const Radio = ({
 
     return (
         <div className={className}>
-            <Label label={label}></Label>
+            <Label label={label} isRequired={isRequired}></Label>
             {options.map((option, idx) => (
                 <RadioLabelWrapper key={idx}>
                     <RadioLabel>

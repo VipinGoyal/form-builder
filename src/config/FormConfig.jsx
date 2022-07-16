@@ -1,8 +1,8 @@
 export const FormData = {
-  title: "Seller Registration Form",
+  title: "Candidate Registration Form",
   formFields: {
     name: {
-      label: "Sellar Name",
+      label: "Candidate Name",
       type: "input",
       placeholder: "Enter Full Name",
       validationRule: {
@@ -12,7 +12,7 @@ export const FormData = {
       },
     },
     email: {
-      label: "Sellar Email",
+      label: "Candidate Email",
       type: "input",
       placeholder: "Enter Email Address",
       validationRule: {
@@ -20,7 +20,7 @@ export const FormData = {
       },
     },
     contact: {
-      label: "Sellar Contact",
+      label: "Candidate Contact",
       type: "input",
       placeholder: "Enter Contact Number without +91",
       validationRule: {
@@ -29,91 +29,124 @@ export const FormData = {
       },
     },
     address: {
-      label: "Address",
+      label: "Candidate Address",
       type: "textarea",
       placeholder: "Enter Complete Address",
       validationRule: {},
     },
-    order: {
-      label: "Seller Yearly Order",
-      type: "select",
-      placeholder: "Select Order per Year",
+    education: {
+      label: "Candidate Education",
+      type: "radio",
       options: [
         {
-          value: "order1",
-          displayValue: ">10Lacs",
+          value: "underGrad",
+          displayValue: "Under Graduate",
         },
         {
-          value: "order2",
-          displayValue: ">1Lacs <10Lacs",
+          value: "postGrad",
+          displayValue: "Post Graduate",
+        },
+      ],
+      chain:{
+        underGrad:{
+          label: "Under Graduation - BE / BTech / BSc / Bcom / BA",
+          type: "input",
+          placeholder: "Enter under graduation",
+          validationRule: {
+            fieldValidation: "text",
+            maxLength: 5
+          },
+        },
+        postGrad:{
+          label: "Post Graduation - ME / MTech / MSc / Mcom / MA",
+          type: "input",
+          placeholder: "Enter post graduation",
+          validationRule: {
+            fieldValidation: "text",
+            maxLength: 5
+          },
+        },
+      },
+      validationRule: {},
+    },
+    order: {
+      label: "Candidate Highest Education Institute Ranking",
+      type: "select",
+      placeholder: "Select institute ranking",
+      options: [
+        {
+          value: "ranking1",
+          displayValue: "Under Top 50",
         },
         {
-          value: "order3",
-          displayValue: "<1Lacs",
+          value: "ranking2",
+          displayValue: "Top 50 - 100",
+        },
+        {
+          value: "ranking3",
+          displayValue: "100 +",
         },
       ],
       validationRule: {},
       chain:{
-        order1:{
-          label: "Order 1",
+        ranking1:{
+          label: "Further Ranking Classification",
           type: "radio",
           options: [
             {
-              value: "order11",
-              displayValue: "Order 11",
+              value: "ranking11",
+              displayValue: "Under Top 10",
             },
             {
-              value: "order12",
-              displayValue: "Order 12",
+              value: "ranking12",
+              displayValue: "Between 10 - 50",
             },
           ],
           validationRule: {},
         },
-        order2:{
-          label: "Order 2",
+        ranking2:{
+          label: "Ranking 2",
           type: "input",
-          placeholder: "Enter Order 2",
+          placeholder: "Enter Institute Name",
           validationRule: {
             fieldValidation: "text",
-            length: 10
+            maxLength: 50
           },
         },
       },
     },
-    type: {
-      label: "Sellar Type",
+    disability: {
+      label: "Any Disability",
       type: "radio",
       options: [
         {
-          value: "partner",
-          displayValue: "Partner",
+          value: "yes",
+          displayValue: "Yes",
         },
         {
-          value: "shopkeeper",
-          displayValue: "ShopKeeper",
+          value: "no",
+          displayValue: "No",
         },
       ],
-      chain:{
-        partner:{
-          label: "GST Number",
-          type: "input",
-          placeholder: "Enter GST Number",
-          validationRule: {
-            fieldValidation: "text",
-            length: 15
-          },
-        },
-        shopkeeper:{
-          label: "PAN Number",
-          type: "input",
-          placeholder: "Enter PAN Number",
-          validationRule: {
-            fieldValidation: "text",
-            length: 10
-          },
-        },
-      },
-      validationRule: {},
     },
+    currentSalary:{
+      label: "Candidate Current Salary",
+      type: "select",
+      placeholder: "Select current salary",
+      options: [
+        {
+          value: "salary1",
+          displayValue: "< 10LPA",
+        },
+        {
+          value: "salary2",
+          displayValue: "10LPA - 50LPA",
+        },
+        {
+          value: "salary3",
+          displayValue: "50LPA +",
+        },
+      ],
+    }
   },
 };

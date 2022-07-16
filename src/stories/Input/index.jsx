@@ -14,11 +14,12 @@ export const Input = ({
   handleChange,
   isValid,
   errorMessage,
+  isRequired,
   ...props
 }) => {
   return (
     <div className={className}>
-      <Label label={label}></Label>
+      <Label label={label} isRequired={isRequired}></Label>
       <InputContainer onChange={handleChange} {...props} />
       {!isValid && errorMessage && <Error>{errorMessage}</Error>}
     </div>

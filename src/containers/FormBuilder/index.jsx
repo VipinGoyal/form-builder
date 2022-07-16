@@ -129,6 +129,8 @@ export const FormBuilder = ({ data }) => {
         )
       }
       <Button type='submit' label="Submit" />
+
+      <span>{"* - Mandatory Field"}</span>
     </Form>
   );
 };

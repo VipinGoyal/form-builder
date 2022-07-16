@@ -13,12 +13,13 @@ export const TextArea = ({
   className,
   handleChange,
   isValid,
+  isRequired,
   errorMessage,
   ...props
 }) => {
   return (
     <div className={className}>
-      <Label label={label}></Label>
+      <Label label={label} isRequired={isRequired}></Label>
       <TextAreaBox onChange={handleChange} {...props} />
       {!isValid && errorMessage && <Error>{errorMessage}</Error>}
     </div>

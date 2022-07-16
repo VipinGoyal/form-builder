@@ -16,6 +16,7 @@ export const Select = ({
     placeholder,
     handleChange,
     isValid,
+    isRequired,
     errorMessage,
     value,
     chainValue,
@@ -33,7 +34,7 @@ export const Select = ({
     }
     return (
         <div className={className}>
-            <Label label={label}></Label>
+            <Label label={label} isRequired={isRequired}></Label>
             <SelectBox
                 placeholder={placeholder}
                 onChange={handleChange}

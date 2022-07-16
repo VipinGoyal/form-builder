@@ -6,9 +6,9 @@ const LabelComp = styled.label`
     display: block;
 `;
 
-export const Label = ({label}) => {
+export const Label = ({label,isRequired}) => {
     return (
-        <LabelComp>{label}</LabelComp>
+        <LabelComp>{label}{isRequired ? '*' : ''}</LabelComp>
     );
 }
 

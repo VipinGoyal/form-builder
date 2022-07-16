@@ -13,6 +13,7 @@ export const FormElementMapper = ({ field, fieldValue, chainFieldValue, element,
       field,
       value,
       isValid,
+      isRequired:!!validationRule,
       errorMessage: errorMessage || `Please enter ${wordUpperCase(field)}`,
       handleChange : (e)=> handleChange(e,field),
       ...(element.chain && { 
