@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./select.css";
 import styled from "styled-components";
 import { Label, Error, TemplateCss } from "../Utils";
+import {FormElementMapper} from "../../containers/FormBuilder/FormElementMapper";
 
 const SelectBox = styled.select`
     ${TemplateCss} 
@@ -16,8 +17,20 @@ export const Select = ({
     handleChange,
     isValid,
     errorMessage,
+    value,
+    chainValue,
+    field,
+    handleChainChange,
+    handleChainBlurChange,
     ...props
 }) => {
+    const handleChainedChange = (e) => {
+        handleChainChange(e, `chain-${field}`);
+      }
+    
+    const handleChainedBlurChange = (e) =>{
+    handleChainBlurChange(e, `chain-${field}`, value);
+    }
     return (
         <div className={className}>
             <Label label={label}></Label>
@@ -25,7 +38,7 @@ export const Select = ({
                 placeholder={placeholder}
                 onChange={handleChange}
             >
-                <option>{placeholder}</option>
+                <option value={0}>{placeholder}</option>
                 {options.map(option => (
                     <option key={option.value} value={option.value}>
                         {option.displayValue}
@@ -33,6 +46,16 @@ export const Select = ({
                 ))}
             </SelectBox>
             {errorMessage && !isValid && <Error>{errorMessage}</Error>}
+            {
+              value && props.chain && props.chain[value] && 
+              <FormElementMapper 
+                field={`chain-${field}`}
+                fieldValue={chainValue}
+                element={props.chain[value]} 
+                handleChange={handleChainedChange}
+                onBlurChange={handleChainedBlurChange}
+              />
+            }
         </div>
     );
 }

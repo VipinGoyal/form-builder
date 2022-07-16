@@ -40,19 +40,45 @@ export const FormData = {
       placeholder: "Select Order per Year",
       options: [
         {
-          value: "1",
+          value: "order1",
           displayValue: ">10Lacs",
         },
         {
-          value: "2",
+          value: "order2",
           displayValue: ">1Lacs <10Lacs",
         },
         {
-          value: "3",
+          value: "order3",
           displayValue: "<1Lacs",
         },
       ],
       validationRule: {},
+      chain:{
+        order1:{
+          label: "Order 1",
+          type: "radio",
+          options: [
+            {
+              value: "order11",
+              displayValue: "Order 11",
+            },
+            {
+              value: "order12",
+              displayValue: "Order 12",
+            },
+          ],
+          validationRule: {},
+        },
+        order2:{
+          label: "Order 2",
+          type: "input",
+          placeholder: "Enter Order 2",
+          validationRule: {
+            fieldValidation: "text",
+            length: 10
+          },
+        },
+      },
     },
     type: {
       label: "Sellar Type",
@@ -67,6 +93,26 @@ export const FormData = {
           displayValue: "ShopKeeper",
         },
       ],
+      chain:{
+        partner:{
+          label: "GST Number",
+          type: "input",
+          placeholder: "Enter GST Number",
+          validationRule: {
+            fieldValidation: "text",
+            length: 15
+          },
+        },
+        shopkeeper:{
+          label: "PAN Number",
+          type: "input",
+          placeholder: "Enter PAN Number",
+          validationRule: {
+            fieldValidation: "text",
+            length: 10
+          },
+        },
+      },
       validationRule: {},
     },
   },

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Button } from "../../stories/Button";
+import { wordUpperCase } from "../../utils";
 import { FormElementMapper } from './FormElementMapper';
 
 const Form = styled.form`
@@ -25,6 +26,9 @@ export const FormBuilder = ({ data }) => {
   const { title: formTitle, formFields } = data;
   let fields = {};
   Object.keys(formFields).forEach((field)=>{
+    if(formFields[field].chain){
+      fields[`chain-${field}`] = {value:'', isValid:true}
+    }
       fields[field] = {value:'',isValid:true}
   });
   
@@ -35,21 +39,24 @@ export const FormBuilder = ({ data }) => {
     formData[key].value = formElementValue;
     formData[key].isValid = !!formElementValue;
     formData[key].errorMessage = '';
-    console.log("formData[field] handleChange", formData[key]);
-
     setFormData({...formData});
   }
 
-  const checkFormFieldValid = (field) => {
+  const checkFormFieldValid = (field, chainField) => {
     let isFormFieldValid = true;
-    const {validationRule} = formFields[field];
+    let parentField = '';
+    if(chainField && chainField !== '0'){
+      parentField = field.split('-')[1];
+    }
+    const {validationRule} = parentField ? formFields[parentField]['chain'][chainField] : formFields[field] ;
+
     const {value}= formData[field];
     let errorMessage = '';
-
-    console.log("formData[field]", formData[field]);
+  
+    const selectOption = !parentField && formFields[field].type === 'select'  ? value === '0' : false;
 
     if(validationRule){
-      if(value && value.length){
+      if(!selectOption && value && value.length){
         const {minLength=0,maxLength=0,length=0} = validationRule;
         if(minLength && maxLength && ( value.length < minLength || value.length > maxLength)){
           errorMessage += `Length should between ${minLength} and ${maxLength}`;
@@ -68,6 +75,9 @@ export const FormBuilder = ({ data }) => {
           isFormFieldValid = false;
         }
       } else {
+        if(parentField){
+          formData[field].errorMessage = `${wordUpperCase(chainField)}'s sub-field should not be empty`
+        }
         formData[field].isValid = false;
         setFormData({...formData});
         isFormFieldValid = false;
@@ -77,7 +87,18 @@ export const FormBuilder = ({ data }) => {
   }
 
   const onSubmit = (event) => {
-    if(Object.keys(formData).map(checkFormFieldValid).some(isFalse=>!isFalse)){
+    if(Object.keys(formData).map((field)=> {
+      if(field.includes('chain-')){
+        const parentField = field.split('-')[1];
+        const chainedValue = formData[parentField].value;
+        if(formFields[parentField]['chain'][chainedValue] && chainedValue){
+          return checkFormFieldValid(field, chainedValue);
+        }
+      } else {
+        return checkFormFieldValid(field);
+      }
+    }
+   ).some(isFalse=>!isFalse)){
       event.preventDefault();
     } else {
       alert("Form Submitted Successfully, check console.log for data");
@@ -88,8 +109,7 @@ export const FormBuilder = ({ data }) => {
       console.log("Form Submitted Succesfully", formData);
       event.preventDefault(); // ToRemove - in actual form submit
       setFormData(fields); // resetting form fields, which might not needed if above line removed
-    }
-    
+    } 
   }
 
   return (
@@ -101,6 +121,7 @@ export const FormBuilder = ({ data }) => {
             key={field}
             field={field}
             fieldValue={formData[field]}
+            chainFieldValue={formFields[field].chain ? formData[`chain-${field}`]:''}
             element={formFields[field]} 
             handleChange={handleChange}
             onBlurChange={checkFormFieldValid}

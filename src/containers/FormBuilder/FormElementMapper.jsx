@@ -2,21 +2,26 @@ import { Input } from "../../stories/Input";
 import { Radio } from "../../stories/Radio";
 import { Select } from "../../stories/Select";
 import { TextArea } from "../../stories/TextArea";
+import { wordUpperCase } from "../../utils";
 
-export const FormElementMapper = ({ field, fieldValue, element, handleChange,onBlurChange }) => {
-    const { label, type, placeholder,options, validationRule } = element;
+export const FormElementMapper = ({ field, fieldValue, chainFieldValue, element, handleChange,onBlurChange }) => {
+    const { type, validationRule,...elementKeys } = element;
     const {value='', isValid='',errorMessage='' } = fieldValue;
 
     const elementProps = {
-      label,
-      placeholder,
-      options,
+      ...elementKeys,
+      field,
       value,
       isValid,
-      errorMessage: errorMessage || `Please enter ${field[0].toUpperCase() + field.slice(1)}`,
+      errorMessage: errorMessage || `Please enter ${wordUpperCase(field)}`,
       handleChange : (e)=> handleChange(e,field),
+      ...(element.chain && { 
+        chainValue:chainFieldValue,
+        handleChainChange:(e, field)=> handleChange(e,field), 
+        handleChainBlurChange: (e,field, parentValue) => onBlurChange(field, parentValue)
+      })
     };
-  
+
     switch (type) {
       case "input":
         const inputType = (type === 'input' && validationRule && validationRule.fieldValidation) || '';

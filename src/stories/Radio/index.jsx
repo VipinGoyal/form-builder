@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./radio.css";
 import styled from "styled-components";
 import { Label, Error } from "../Utils";
+import {FormElementMapper} from "../../containers/FormBuilder/FormElementMapper";
 
 const RadioLabelWrapper = styled.div`
   display: inline-block;
@@ -61,18 +62,32 @@ export const Radio = ({
     label,
     options,
     value,
+    chainValue,
     className,
+    field,
     handleChange,
+    handleChainChange,
+    handleChainBlurChange,
     isValid,
     errorMessage,
+    ...props
 }) => {
+
+  const handleChainedChange = (e) => {
+    handleChainChange(e, `chain-${field}`);
+  }
+
+  const handleChainedBlurChange = (e) =>{
+    handleChainBlurChange(e, `chain-${field}`, value);
+  }
+
     return (
         <div className={className}>
             <Label label={label}></Label>
             {options.map((option, idx) => (
-                <RadioLabelWrapper key={idx} onChange={handleChange}>
+                <RadioLabelWrapper key={idx}>
                     <RadioLabel>
-                      <RadioInput type="radio" value={option.value} checked={value===option.value}/>
+                      <RadioInput type="radio" value={option.value} checked={value===option.value} onChange={handleChange}/>
                       <Dot />
                       {" "}
                       {option.displayValue}
@@ -80,6 +95,16 @@ export const Radio = ({
                 </RadioLabelWrapper>
             ))}
             {errorMessage && !isValid && <Error>{errorMessage}</Error>}
+            {
+              value && props.chain && props.chain[value] && 
+              <FormElementMapper 
+                field={`chain-${field}`}
+                fieldValue={chainValue}
+                element={props.chain[value]} 
+                handleChange={handleChainedChange}
+                onBlurChange={handleChainedBlurChange}
+              />
+            }
         </div>
     );
 }
